@@ -9,11 +9,12 @@ function WeatherInfo() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchWeather(selectedCity));
-    console.log(weatherData);
   }, [dispatch, selectedCity]);
   return (
     <div>
-      <p className="text-2xl text-center mt-5"></p>
+      <p className="text-2xl text-center mt-5">
+        {weatherData ? weatherData.location.name : "Waitin for city"}
+      </p>
     </div>
   );
 }

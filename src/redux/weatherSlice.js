@@ -4,8 +4,10 @@ import axios from "axios";
 export const fetchWeather = createAsyncThunk(
   "weather/getWeather",
   async (city) => {
-    const res = await axios(
-      `http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${city}&days=5&aqi=no&alerts=no`
+    const res = await axios.get(
+      `http://api.weatherapi.com/v1/forecast.json?key=${
+        import.meta.env.VITE_REACT_APP_API_KEY
+      }&q=${city}&days=5&aqi=no&alerts=no`
     );
     return res.data;
   }
@@ -15,8 +17,8 @@ const weatherSlice = createSlice({
   name: "weather",
   initialState: {
     selectedCity: "",
-    weatherData: {},
-    weatherStatus: null,
+    weatherData: null,
+    weatherLoading: false,
     weatherError: null,
   },
   reducers: {
@@ -24,7 +26,29 @@ const weatherSlice = createSlice({
       state.selectedCity = action.payload;
     },
   },
-  extraReducers: {
+  extraReducers: (builder) => {
+    builder.addCase(
+      fetchWeather.pending,
+      (state, action) => {
+        state.weatherLoading = true;
+        state.weatherError = null;
+      },
+      builder.addCase(fetchWeather.fulfilled, (state, action) => {
+        state.weatherData = action.payload;
+        console.log(action.payload);
+      }),
+      builder.addCase(fetchWeather.rejected, (state, action) => {
+        state.weatherStatus = "failed";
+        state.weatherError = action.error.message;
+      })
+    );
+  },
+});
+
+export default weatherSlice.reducer;
+export const { setSelectedCity } = weatherSlice.actions;
+
+/*
     [fetchWeather.pending]: (state, action) => {
       state.weatherStatus = "loading";
       state.weatherError = null;
@@ -37,8 +61,4 @@ const weatherSlice = createSlice({
       state.weatherStatus = "failed";
       state.weatherError = action.error.message;
     },
-  },
-});
-
-export default weatherSlice.reducer;
-export const { setSelectedCity } = weatherSlice.actions;
+    */
