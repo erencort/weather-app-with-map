@@ -35,11 +35,12 @@ const weatherSlice = createSlice({
       },
       builder.addCase(fetchWeather.fulfilled, (state, action) => {
         state.weatherData = action.payload;
-        console.log(action.payload);
+        state.weatherLoading = false;
       }),
       builder.addCase(fetchWeather.rejected, (state, action) => {
         state.weatherStatus = "failed";
         state.weatherError = action.error.message;
+        state.weatherLoading = false;
       })
     );
   },

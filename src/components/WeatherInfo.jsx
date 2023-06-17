@@ -22,56 +22,39 @@ function WeatherInfo() {
   return (
     <div>
       <p className="text-5xl text-center mb-5">
-        {weatherData ? weatherData.location.name : "Waitin for city"}
+        {weatherData ? weatherData.location.name : "Select a City"}
       </p>
-      <div
-        style={{ backgroundColor: "#D8C4B6" }}
-        className="py-8 px-5 rounded-3xl grid gap-4 grid-cols-5 grid-rows-1"
-      >
-        {forecast.map((item) => (
-          <div style={{ backgroundColor: "#F5EFE7" }} className="rounded-3xl">
-            <div className="flex justify-center">
-              <img
-                src={item.day.condition.icon}
-                alt={item.day.condition.text}
-              />
-            </div>
-            <div className="flex justify-around">
-              <div className="font-normal text-xl ">{item.day.mintemp_c}</div>
-              <div className="font-bold text-xl">{item.day.maxtemp_c}</div>
-            </div>
+      {weatherData && (
+        <div
+          style={{ backgroundColor: "#D8C4B6" }}
+          className="py-8 px-5 rounded-3xl grid gap-4 desktop:grid-cols-5 grid-rows-1 tablet:grid-cols-2 desktop:w-full w-3/4 mx-auto"
+        >
+          {forecast.map((item) => (
+            <div style={{ backgroundColor: "#F5EFE7" }} className="rounded-3xl">
+              <div className="flex justify-center py-2">
+                <img
+                  src={item.day.condition.icon}
+                  alt={item.day.condition.text}
+                />
+              </div>
+              <div className="flex justify-around py-2">
+                <div className="font-normal text-xl ">
+                  {item.day.mintemp_c}
+                  <span className="ml-1 text-sm">°C</span>
+                </div>
+                <div className="font-bold text-xl">
+                  {item.day.maxtemp_c}
+                  <span className="font-normal ml-1 text-sm">°C</span>
+                </div>
+              </div>
 
-            <div className="flex justify-center">
-              <p>{item.date}</p>
+              <div className="flex justify-center py-2">
+                <p>{item.date}</p>
+              </div>
             </div>
-          </div>
-        ))}
-        {/*
-        <div style={{ backgroundColor: "#F5EFE7" }} className="rounded-3xl">
-          <div className="flex justify-center">
-            <img
-              src={weatherData.forecast.forecastday[0].day.condition.icon}
-              alt={weatherData.forecast.forecastday[0].day.condition.text}
-            />
-          </div>
-          <div className="flex justify-around">
-            <div className="font-normal text-xl ">
-              {weatherData.forecast.forecastday[0].day.mintemp_c}
-            </div>
-            <div className="font-bold text-xl">
-              {weatherData.forecast.forecastday[0].day.maxtemp_c}
-            </div>
-          </div>
-
-          <div className="flex justify-center">
-            <p>{weatherData.forecast.forecastday[0].date}</p>
-          </div>
+          ))}
         </div>
-        <div className="text-center">2</div>
-        <div className="text-center">3</div>
-        <div className="text-center">4</div>
-    <div className="text-center">5</div>*/}
-      </div>
+      )}
     </div>
   );
 }

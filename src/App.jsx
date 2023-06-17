@@ -5,8 +5,8 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div style={{ height: "130vh", backgroundColor: "#4F709C" }}>
-      <div className="container mx-auto">
+    <div style={{ backgroundColor: "#4F709C" }}>
+      <div className="container mx-auto tablet:h-full desktop:h-screen">
         <Home />
       </div>
     </div>
