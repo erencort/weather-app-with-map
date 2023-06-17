@@ -6,31 +6,40 @@ import { fetchWeather } from "../redux/weatherSlice";
 function WeatherInfo() {
   const selectedCity = useSelector((state) => state.weather.selectedCity);
   const weatherData = useSelector((state) => state.weather.weatherData);
+  const weatherError = useSelector((state) => state.weather.weatherError);
   const [forecast, setForecast] = useState(
     weatherData ? weatherData.forecast.forecastday : []
   );
   const dispatch = useDispatch();
-  useEffect(() => {
+  /*useEffect(() => {
     dispatch(fetchWeather(selectedCity));
   }, [dispatch, selectedCity]);
-
+*/
   useEffect(() => {
     weatherData && setForecast(weatherData.forecast.forecastday);
     console.log(forecast);
   }, [weatherData]);
+
+  if (weatherError)
+    return <div>Error: {weatherError}. Please select another city.</div>;
 
   return (
     <div>
       <p className="text-5xl text-center mb-5">
         {weatherData ? weatherData.location.name : "Select a City"}
       </p>
+      {weatherError && <p>{weatherError}</p>}
       {weatherData && (
         <div
           style={{ backgroundColor: "#D8C4B6" }}
           className="py-8 px-5 rounded-3xl grid gap-4 desktop:grid-cols-5 grid-rows-1 tablet:grid-cols-2 desktop:w-full w-3/4 mx-auto"
         >
-          {forecast.map((item) => (
-            <div style={{ backgroundColor: "#F5EFE7" }} className="rounded-3xl">
+          {forecast.map((item, index) => (
+            <div
+              style={{ backgroundColor: "#F5EFE7" }}
+              className="rounded-3xl"
+              key={index}
+            >
               <div className="flex justify-center py-2">
                 <img
                   src={item.day.condition.icon}
