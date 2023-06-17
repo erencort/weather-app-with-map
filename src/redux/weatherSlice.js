@@ -5,7 +5,7 @@ export const fetchWeather = createAsyncThunk(
   "weather/getWeather",
   async (city) => {
     const res = await axios(
-      `http://api.weatherapi.com/v1/forecast.json?key=bee42cddca36479689695002231706&q=${city}&days=5&aqi=no&alerts=no`
+      `http://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_API_KEY}&q=${city}&days=5&aqi=no&alerts=no`
     );
     return res.data;
   }
