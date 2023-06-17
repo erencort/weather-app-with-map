@@ -27,12 +27,15 @@ function WeatherInfo() {
       </div>
     );
 
+  //loading
+  if (weatherLoading)
+    return <div className="text-5xl text-center">Loading...</div>;
+
   return (
     <div>
       <p className="text-5xl text-center mb-5">
         {weatherData ? weatherData.location.name : "Select a City"}
       </p>
-      {weatherLoading && <p className="text-5xl text-center">Loading...</p>}
       {weatherData && (
         <div
           style={{ backgroundColor: "#D8C4B6" }}
