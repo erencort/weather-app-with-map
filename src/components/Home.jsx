@@ -10,7 +10,6 @@ function Home() {
 
   return (
     <div>
-      <Header />
       <TurkeyMap
         hoverable={true}
         customStyle={{ idleColor: "#213555", hoverColor: "#ef233c" }}
