@@ -1,9 +1,8 @@
 import React from "react";
 import TurkeyMap from "turkey-map-react";
 import WeatherInfo from "./WeatherInfo";
-import Header from "./Header";
 import { useDispatch } from "react-redux";
-import { fetchWeather, setSelectedCity } from "../redux/weatherSlice";
+import { fetchWeather } from "../redux/weatherSlice";
 
 function Home() {
   const dispatch = useDispatch();

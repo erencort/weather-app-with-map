@@ -1,12 +1,11 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchWeather } from "../redux/weatherSlice";
 
 function WeatherInfo() {
-  const selectedCity = useSelector((state) => state.weather.selectedCity);
   const weatherData = useSelector((state) => state.weather.weatherData);
   const weatherError = useSelector((state) => state.weather.weatherError);
+  const weatherLoading = useSelector((state) => state.weather.weatherLoading);
   const [forecast, setForecast] = useState(
     weatherData ? weatherData.forecast.forecastday : []
   );
@@ -20,15 +19,20 @@ function WeatherInfo() {
     console.log(forecast);
   }, [weatherData]);
 
+  // Error handling
   if (weatherError)
-    return <div>Error: {weatherError}. Please select another city.</div>;
+    return (
+      <div className="text-5xl text-center">
+        Error: {weatherError}. Please select another city.
+      </div>
+    );
 
   return (
     <div>
       <p className="text-5xl text-center mb-5">
         {weatherData ? weatherData.location.name : "Select a City"}
       </p>
-      {weatherError && <p>{weatherError}</p>}
+      {weatherLoading && <p className="text-5xl text-center">Loading...</p>}
       {weatherData && (
         <div
           style={{ backgroundColor: "#D8C4B6" }}
